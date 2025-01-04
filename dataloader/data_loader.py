@@ -96,7 +96,9 @@ class CreateDataset(data.Dataset):
                     [
                         transforms.RandomHorizontalFlip(),
                         transforms.RandomRotation(10),
-                        transforms.RandomCrop([self.opt.fine_size + 64, self.opt.fine_size + 64]),
+                        # transforms.RandomCrop([self.opt.fine_size + 64, self.opt.fine_size + 64]),
+                        # 動態調整裁剪尺寸，避免超過圖片實際尺寸
+                        transforms.RandomCrop([min(h, self.opt.fine_size), min(w, self.opt.fine_size)]),
                         transforms.Resize([h, w])
                     ]
                 )
