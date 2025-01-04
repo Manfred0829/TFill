@@ -67,7 +67,8 @@ class CreateDataset(data.Dataset):
         """mask erosion for different region"""
         mask = np.array(mask)
         pixel = np.random.randint(3, 25)
-        mask = sm.erosion(mask, sm.square(pixel)).astype(np.uint8)
+        # mask = sm.erosion(mask, sm.square(pixel)).astype(np.uint8) # square is deprecated
+        mask = sm.erosion(mask, sm.rectangle(pixel, pixel)).astype(np.uint8)
 
         return mask
 
