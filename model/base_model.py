@@ -193,3 +193,10 @@ class BaseModel():
             img_path = os.path.join(path, img_name)
             img_numpy = util.tensor2im(save_data[i].unsqueeze(0))
             util.save_image(img_numpy, img_path)
+
+
+# 新增 base 類別
+class base(BaseModel):
+    def __init__(self, opt):
+        super(base, self).__init__(opt)
+        print("Base model initialized.")
