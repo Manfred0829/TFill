@@ -1,7 +1,7 @@
 """This package contains modules related to function, network architectures, and models"""
 
 import importlib
-from .base_model import BaseModel
+from .base_model import BaseModel, base
 
 
 def find_model_using_name(model_name):
