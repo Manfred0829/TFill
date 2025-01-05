@@ -193,21 +193,3 @@ class BaseModel():
             img_path = os.path.join(path, img_name)
             img_numpy = util.tensor2im(save_data[i].unsqueeze(0))
             util.save_image(img_numpy, img_path)
-
-# Add base subclass
-class base(BaseModel):
-    def __init__(self, opt):
-        super(base, self).__init__(opt)
-        print("Base model initialized.")
-
-        # 假設有 netG 和 netD，初始化優化器
-        self.netG = SomeGenerator()
-        self.netD = SomeDiscriminator()
-
-        # 初始化優化器
-        self.optimizer_G = torch.optim.Adam(self.netG.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
-        self.optimizer_D = torch.optim.Adam(self.netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
-
-        # 添加到 self.optimizers 列表
-        self.optimizers.append(self.optimizer_G)
-        self.optimizers.append(self.optimizer_D)
