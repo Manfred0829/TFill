@@ -110,9 +110,15 @@ class CreateDataset(data.Dataset):
                         transforms.Resize([h, w])
                     ]
                 )
-            mask_pil = Image.open(self.mask_paths[mask_index]).convert('L')
-            mask = mask_transform(mask_pil)
-            mask_pil.close()
+            # mask_pil = Image.open(self.mask_paths[mask_index]).convert('L')
+            # mask = mask_transform(mask_pil)
+            # mask_pil.close()
+            # 使用 `with` 語法安全打開和處理 mask 圖像
+            with Image.open(self.mask_paths[mask_index]).convert('L') as mask_pil:
+                print(f"Mask loaded: {mask_pil.size}, mode: {mask_pil.mode}")  # 調試資訊
+                mask = mask_transform(mask_pil)
+                print(f"Mask after transform: {type(mask)}")  # 調試資訊
+                
             if self.opt.isTrain:
                 mask = self._mask_dilation(mask)
             else:
