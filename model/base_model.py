@@ -193,3 +193,28 @@ class BaseModel():
             img_path = os.path.join(path, img_name)
             img_numpy = util.tensor2im(save_data[i].unsqueeze(0))
             util.save_image(img_numpy, img_path)
+
+class base(BaseModel):
+    def __init__(self, opt):
+        super(base, self).__init__(opt)
+        
+        # 初始化網路模型（例如生成器和判別器）
+        self.netG = Generator()
+        self.netD = Discriminator()
+
+        # 定義訓練中的損失名稱
+        self.loss_names = ['GAN_loss', 'L1_loss']
+
+        # 定義模型名稱（例如生成器和判別器）
+        self.model_names = ['G', 'D']
+
+        # 定義需要可視化的變數
+        self.visual_names = ['real_A', 'real_B', 'fake_B']
+
+        # 優化器初始化
+        self.optimizer_G = torch.optim.Adam(self.netG.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
+        self.optimizer_D = torch.optim.Adam(self.netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
+        self.optimizers = [self.optimizer_G, self.optimizer_D]
+
+        # 存儲圖像路徑
+        self.image_paths = []
